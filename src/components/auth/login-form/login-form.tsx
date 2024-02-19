@@ -10,13 +10,16 @@ import { z } from 'zod'
 const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(3),
+  rememberMe: z.boolean().optional(),
 })
 
-type FormValues = {
-  email: string
-  password: string
-  rememberMe: boolean
-}
+type FormValues = z.infer<typeof loginSchema>
+
+// type FormValues = {
+//   email: string
+//   password: string
+//   rememberMe: boolean
+// }
 
 export const LoginForm = () => {
   const formRef = useRef(null)
