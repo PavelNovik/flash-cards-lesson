@@ -4,6 +4,13 @@ import { useController, useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button/button'
 import { FormCheckbox } from '@/components/ui/checkbox/checkbox'
 import { TextField } from '@/components/ui/text-field/text-field'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+const loginSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(3),
+})
 
 type FormValues = {
   email: string
@@ -18,7 +25,7 @@ export const LoginForm = () => {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<FormValues>()
+  } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
 
   const {
     field: { onChange, value },
@@ -37,19 +44,13 @@ export const LoginForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
       <TextField
         errorMessage={errors.email?.message}
-        {...register('email', {
-          pattern: { message: 'Invalid email', value: emailRegex },
-          required: 'The email should be',
-        })}
+        {...register('email')}
         label={'email'}
         type={'email'}
       />
       <TextField
         errorMessage={errors.password?.message}
-        {...register('password', {
-          minLength: { message: 'Password has to be at least 3 characters long', value: 3 },
-          required: 'The password should be',
-        })}
+        {...register('password')}
         label={'password'}
         type={'password'}
       />
@@ -64,5 +65,5 @@ export const LoginForm = () => {
   )
 }
 
-const emailRegex =
-  /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
+// const emailRegex =
+//   /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
