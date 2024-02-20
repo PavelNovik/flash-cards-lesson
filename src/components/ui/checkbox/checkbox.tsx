@@ -7,7 +7,7 @@ import s from './checkbox.module.scss'
 
 export type FormCheckboxT = {
   checked?: boolean
-  label?: string
+  label: string
   name: string
   onValueChange?: (checked: boolean) => void
 } & ComponentPropsWithoutRef<'button'>
@@ -20,7 +20,7 @@ export const FormCheckbox = forwardRef<ElementRef<'button'>, FormCheckboxT>((pro
       <div style={{ alignItems: 'center', display: 'flex' }}>
         <Checkbox.Root
           className={s.CheckboxRoot}
-          id={name}
+          id={label}
           onCheckedChange={onValueChange}
           ref={ref}
           {...rest}
@@ -29,7 +29,7 @@ export const FormCheckbox = forwardRef<ElementRef<'button'>, FormCheckboxT>((pro
             <CheckIcon />
           </Checkbox.Indicator>
         </Checkbox.Root>
-        <label className={s.Label} htmlFor={name}>
+        <label className={s.Label} htmlFor={label}>
           {label}
         </label>
       </div>

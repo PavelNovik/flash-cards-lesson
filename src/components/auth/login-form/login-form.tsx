@@ -1,15 +1,17 @@
-import { useEffect, useRef } from 'react'
-import { useController, useForm } from 'react-hook-form'
+import { useRef } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button/button'
-import { FormCheckbox } from '@/components/ui/checkbox/checkbox'
-import { TextField } from '@/components/ui/text-field/text-field'
+import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
+import { ControlledTextfield } from '@/components/ui/controlled/controlled-checkbox/controlled-textfield'
+// import { TextField } from '@/components/ui/text-field/text-field'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const loginSchema = z.object({
   email: z.string().min(1, 'To small bitch').email('It is not valid bitch'),
   password: z.string().min(3),
+  phone: z.string().min(7),
   rememberMe: z.boolean().optional(),
 })
 
@@ -27,17 +29,17 @@ export const LoginForm = () => {
     control,
     formState: { errors },
     handleSubmit,
-    register,
+    // register,
   } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
 
-  const {
-    field: { onChange, value },
-  } = useController({ control, defaultValue: false, name: 'rememberMe' })
+  // const {
+  //   field: { onChange, value },
+  // } = useController({ control, defaultValue: false, name: 'rememberMe' })
 
-  useEffect(() => {
-    console.log(formRef.current)
-  }, [])
-  console.log(errors)
+  // useEffect(() => {
+  //   console.log(formRef.current)
+  // }, [])
+  // console.log(errors)
   // console.log(register('email'))
   const onSubmit = (data: FormValues) => {
     console.log(data)
@@ -45,24 +47,50 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
-      <TextField
+      {/*<TextField*/}
+      {/*  errorMessage={errors.email?.message}*/}
+      {/*  {...register('email')}*/}
+      {/*  label={'email'}*/}
+      {/*  type={'email'}*/}
+      {/*/>*/}
+      {/*<TextField*/}
+      {/*  errorMessage={errors.password?.message}*/}
+      {/*  {...register('password')}*/}
+      {/*  label={'password'}*/}
+      {/*  type={'password'}*/}
+      {/*/>*/}
+      <ControlledTextfield
+        control={control}
         errorMessage={errors.email?.message}
-        {...register('email')}
         label={'email'}
-        type={'email'}
+        name={'email'}
+        type={'text'}
       />
-      <TextField
+      <ControlledTextfield
+        control={control}
         errorMessage={errors.password?.message}
-        {...register('password')}
         label={'password'}
+        name={'password'}
         type={'password'}
       />
-      <FormCheckbox
-        checked={value}
-        onValueChange={onChange}
-        {...register('rememberMe')}
-        label={'Remember me'}
+
+      <ControlledTextfield
+        control={control}
+        errorMessage={errors.phone?.message}
+        label={'phone'}
+        name={'phone'}
+        type={'text'}
       />
+
+      {/*<FormCheckbox*/}
+      {/*  checked={value}*/}
+      {/*  // name={'remeberMe'}*/}
+      {/*  label={'Remember me'}*/}
+      {/*  //{...register('rememberMe')}*/}
+      {/*  onValueChange={onChange}*/}
+      {/*/>*/}
+
+      <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
       <Button type={'submit'}>Submit</Button>
     </form>
   )
