@@ -1,8 +1,6 @@
 import { useRef } from 'react'
 import { useForm } from 'react-hook-form'
 
-import * as process from 'process'
-
 import { Button } from '@/components/ui/button/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { TextField } from '@/components/ui/text-field/text-field'
@@ -31,7 +29,14 @@ export const LoginForm = () => {
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
+  } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+    resolver: zodResolver(loginSchema),
+  })
 
   // const {
   //   field: { onChange, value },
@@ -43,7 +48,8 @@ export const LoginForm = () => {
 
   return (
     <>
-      {process.env.NODE_ENV === 'development' && <DevTool control={control} />}
+      {/*{process.env.NODE_ENV === 'development' && <DevTool control={control} />}*/}
+      <DevTool control={control} />
       <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
         <TextField
           errorMessage={errors.email?.message}
