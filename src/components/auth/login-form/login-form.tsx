@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { TextField } from '@/components/ui/text-field/text-field'
+import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -39,38 +40,41 @@ export const LoginForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
-      <TextField
-        errorMessage={errors.email?.message}
-        {...register('email')}
-        label={'email'}
-        type={'email'}
-      />
-      <TextField
-        errorMessage={errors.password?.message}
-        {...register('password')}
-        label={'password'}
-        type={'password'}
-      />
-      {/*<ControlledTextfield*/}
-      {/*  control={control}*/}
-      {/*  errorMessage={errors.phone?.message}*/}
-      {/*  label={'phone'}*/}
-      {/*  name={}*/}
-      {/*  type={'text'}*/}
-      {/*/>*/}
+    <>
+      <DevTool control={control} />
+      <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
+        <TextField
+          errorMessage={errors.email?.message}
+          {...register('email')}
+          label={'email'}
+          type={'email'}
+        />
+        <TextField
+          errorMessage={errors.password?.message}
+          {...register('password')}
+          label={'password'}
+          type={'password'}
+        />
+        {/*<ControlledTextfield*/}
+        {/*  control={control}*/}
+        {/*  errorMessage={errors.phone?.message}*/}
+        {/*  label={'phone'}*/}
+        {/*  name={}*/}
+        {/*  type={'text'}*/}
+        {/*/>*/}
 
-      {/*<FormCheckbox*/}
-      {/*  checked={value}*/}
-      {/*  // name={'remeberMe'}*/}
-      {/*  label={'Remember me'}*/}
-      {/*  //{...register('rememberMe')}*/}
-      {/*  onValueChange={onChange}*/}
-      {/*/>*/}
+        {/*<FormCheckbox*/}
+        {/*  checked={value}*/}
+        {/*  // name={'remeberMe'}*/}
+        {/*  label={'Remember me'}*/}
+        {/*  //{...register('rememberMe')}*/}
+        {/*  onValueChange={onChange}*/}
+        {/*/>*/}
 
-      <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
-      <Button type={'submit'}>Submit</Button>
-    </form>
+        <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
+        <Button type={'submit'}>Submit</Button>
+      </form>
+    </>
   )
 }
 
