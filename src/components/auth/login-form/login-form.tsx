@@ -48,8 +48,8 @@ export const LoginForm = () => {
 
   return (
     <>
-      {/*{process.env.NODE_ENV === 'development' && <DevTool control={control} />}*/}
-      <DevTool control={control} />
+      {process.env.NODE_ENV === 'development' && <DevTool control={control} />}
+      {/*<DevTool control={control} />*/}
       <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
         <TextField
           errorMessage={errors.email?.message}
