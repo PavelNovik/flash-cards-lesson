@@ -5,7 +5,7 @@ export type Textfield = {
   control?: any
   errorMessage?: string
   label: string
-  onChange?: (value: string) => void
+  // onChange?: (value: string) => void
   value?: string
 } & ComponentPropsWithoutRef<'input'>
 
@@ -19,7 +19,7 @@ export const TextField = forwardRef<ElementRef<'input'>, Textfield>((props, ref)
         {...rest}
         defaultValue={rest.defaultValue}
         id={name}
-        onChange={onChange}
+        // onChange={onChange}
         ref={ref}
         style={{ backgroundColor: 'inherit' }}
       />

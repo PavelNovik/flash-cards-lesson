@@ -3,15 +3,15 @@ import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
-import { ControlledTextfield } from '@/components/ui/controlled/controlled-checkbox/controlled-textfield'
-// import { TextField } from '@/components/ui/text-field/text-field'
+// import { ControlledTextfield } from '@/components/ui/controlled/controlled-checkbox/controlled-textfield'
+import { TextField } from '@/components/ui/text-field/text-field'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const loginSchema = z.object({
   email: z.string().min(1, 'To small bitch').email('It is not valid bitch'),
   password: z.string().min(3),
-  phone: z.string().min(7),
+  // phone: z.string().min(7),
   rememberMe: z.boolean().optional(),
 })
 
@@ -29,7 +29,7 @@ export const LoginForm = () => {
     control,
     formState: { errors },
     handleSubmit,
-    // register,
+    register,
   } = useForm<FormValues>({ resolver: zodResolver(loginSchema) })
 
   // const {
@@ -47,40 +47,40 @@ export const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
-      {/*<TextField*/}
-      {/*  errorMessage={errors.email?.message}*/}
-      {/*  {...register('email')}*/}
-      {/*  label={'email'}*/}
-      {/*  type={'email'}*/}
-      {/*/>*/}
-      {/*<TextField*/}
-      {/*  errorMessage={errors.password?.message}*/}
-      {/*  {...register('password')}*/}
-      {/*  label={'password'}*/}
-      {/*  type={'password'}*/}
-      {/*/>*/}
-      <ControlledTextfield
-        control={control}
+      <TextField
         errorMessage={errors.email?.message}
+        {...register('email')}
         label={'email'}
-        name={'email'}
-        type={'text'}
+        type={'email'}
       />
-      <ControlledTextfield
-        control={control}
+      <TextField
         errorMessage={errors.password?.message}
+        {...register('password')}
         label={'password'}
-        name={'password'}
         type={'password'}
       />
+      {/*<ControlledTextfield*/}
+      {/*  control={control}*/}
+      {/*  errorMessage={errors.email?.message}*/}
+      {/*  label={'email'}*/}
+      {/*  name={'email'}*/}
+      {/*  type={'text'}*/}
+      {/*/>*/}
+      {/*<ControlledTextfield*/}
+      {/*  control={control}*/}
+      {/*  errorMessage={errors.password?.message}*/}
+      {/*  label={'password'}*/}
+      {/*  name={'password'}*/}
+      {/*  type={'password'}*/}
+      {/*/>*/}
 
-      <ControlledTextfield
-        control={control}
-        errorMessage={errors.phone?.message}
-        label={'phone'}
-        name={'phone'}
-        type={'text'}
-      />
+      {/*<ControlledTextfield*/}
+      {/*  control={control}*/}
+      {/*  errorMessage={errors.phone?.message}*/}
+      {/*  label={'phone'}*/}
+      {/*  name={'phone'}*/}
+      {/*  type={'text'}*/}
+      {/*/>*/}
 
       {/*<FormCheckbox*/}
       {/*  checked={value}*/}
