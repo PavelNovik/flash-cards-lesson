@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button/button'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
-// import { ControlledTextfield } from '@/components/ui/controlled/controlled-checkbox/controlled-textfield'
 import { TextField } from '@/components/ui/text-field/text-field'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -11,7 +10,6 @@ import { z } from 'zod'
 const loginSchema = z.object({
   email: z.string().min(1, 'To small bitch').email('It is not valid bitch'),
   password: z.string().min(3),
-  // phone: z.string().min(7),
   rememberMe: z.boolean().optional(),
 })
 
@@ -36,11 +34,6 @@ export const LoginForm = () => {
   //   field: { onChange, value },
   // } = useController({ control, defaultValue: false, name: 'rememberMe' })
 
-  // useEffect(() => {
-  //   console.log(formRef.current)
-  // }, [])
-  // console.log(errors)
-  // console.log(register('email'))
   const onSubmit = (data: FormValues) => {
     console.log(data)
   }
@@ -61,24 +54,9 @@ export const LoginForm = () => {
       />
       {/*<ControlledTextfield*/}
       {/*  control={control}*/}
-      {/*  errorMessage={errors.email?.message}*/}
-      {/*  label={'email'}*/}
-      {/*  name={'email'}*/}
-      {/*  type={'text'}*/}
-      {/*/>*/}
-      {/*<ControlledTextfield*/}
-      {/*  control={control}*/}
-      {/*  errorMessage={errors.password?.message}*/}
-      {/*  label={'password'}*/}
-      {/*  name={'password'}*/}
-      {/*  type={'password'}*/}
-      {/*/>*/}
-
-      {/*<ControlledTextfield*/}
-      {/*  control={control}*/}
       {/*  errorMessage={errors.phone?.message}*/}
       {/*  label={'phone'}*/}
-      {/*  name={'phone'}*/}
+      {/*  name={}*/}
       {/*  type={'text'}*/}
       {/*/>*/}
 
