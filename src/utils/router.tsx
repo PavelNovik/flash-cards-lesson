@@ -1,5 +1,6 @@
 import { Navigate, Outlet, RouteObject, createBrowserRouter } from 'react-router-dom'
 
+import { DecksPages } from '@/pages/decks-pages'
 import { useGetDecksQuery } from '@/services/base-api'
 
 const publicRoutes: RouteObject[] = [
@@ -45,7 +46,12 @@ export const Router = () => {
   }
   console.log(data)
 
-  return <div>{JSON.stringify(data)}</div>
+  return (
+    <>
+      <DecksPages />
+      {/*<div>{JSON.stringify(data.items)}</div>*/}
+    </>
+  )
 
   // console.log(result)
 
