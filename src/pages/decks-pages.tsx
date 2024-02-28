@@ -18,9 +18,10 @@ import {
   useGetMinMaxCardsQuery,
   // useLazyGetDecksQuery,
 } from '@/services/base-api'
+import { useDebounceValue } from 'usehooks-ts'
 
 export const DecksPages = () => {
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useDebounceValue('', 500)
   const { data: minMaxCardData } = useGetMinMaxCardsQuery()
 
   console.log(minMaxCardData)
@@ -46,7 +47,11 @@ export const DecksPages = () => {
 
   return (
     <Container>
-      <TextField label={'Search'} onChange={e => setSearch(e.currentTarget.value)} value={search} />
+      <TextField
+        defaultValue={search}
+        label={'Search'}
+        onChange={e => setSearch(e.currentTarget.value)}
+      />
       <Button disabled={isDeckBeingCreated} onClick={() => createDeck({ name: search })}>
         Add new Deck
       </Button>
