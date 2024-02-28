@@ -12,6 +12,7 @@ export const baseApi = createApi({
   endpoints: builder => {
     return {
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
+        invalidatesTags: ['Decks'],
         query: body => ({
           body,
           method: 'POST',
@@ -19,6 +20,7 @@ export const baseApi = createApi({
         }),
       }),
       getDecks: builder.query<Decks, GetDecksArgs | void>({
+        providesTags: ['Decks'],
         query: args => ({
           params: args ?? undefined,
           url: `v2/decks`,
@@ -27,6 +29,7 @@ export const baseApi = createApi({
     }
   },
   reducerPath: 'baseApi',
+  tagTypes: ['Decks'],
 })
 
 export const { useCreateDeckMutation, useGetDecksQuery } = baseApi

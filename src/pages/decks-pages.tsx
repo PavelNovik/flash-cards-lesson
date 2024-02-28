@@ -15,7 +15,7 @@ import { useCreateDeckMutation, useGetDecksQuery } from '@/services/base-api'
 
 export const DecksPages = () => {
   const [search, setSearch] = useState('')
-  const { data, isError, isLoading, refetch } = useGetDecksQuery({ name: search })
+  const { data, isError, isLoading } = useGetDecksQuery({ name: search })
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
 
   if (isLoading) {
@@ -29,7 +29,7 @@ export const DecksPages = () => {
   return (
     <Container>
       <TextField label={'Search'} onChange={e => setSearch(e.currentTarget.value)} value={search} />
-      <Button onClick={() => createDeck({ name: search }).finally(refetch)}>Add new Deck</Button>
+      <Button onClick={() => createDeck({ name: search })}>Add new Deck</Button>
       <Table>
         <TableHead>
           <TableRow>
