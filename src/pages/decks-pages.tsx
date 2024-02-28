@@ -14,8 +14,9 @@ import { TextField } from '@/components/ui/text-field/text-field'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
-  useGetDecksQuery,
+  // useGetDecksQuery,
   useGetMinMaxCardsQuery,
+  useLazyGetDecksQuery,
 } from '@/services/base-api'
 
 export const DecksPages = () => {
@@ -23,14 +24,15 @@ export const DecksPages = () => {
   const { data: minMaxCardData } = useGetMinMaxCardsQuery()
 
   console.log(minMaxCardData)
-  const { data, isError, isLoading } = useGetDecksQuery(
-    {
-      maxCardsCount: minMaxCardData?.max,
-      minCardsCount: minMaxCardData?.min,
-      name: search,
-    },
-    { skip: !minMaxCardData }
-  )
+  // const { data, isError, isLoading } = useGetDecksQuery(
+  //   {
+  //     // maxCardsCount: minMaxCardData?.max,
+  //     // minCardsCount: minMaxCardData?.min,
+  //     name: search,
+  //   }
+  //   // { skip: !minMaxCardData }
+  // )
+  const [fetchData, { data, isError, isLoading }] = useLazyGetDecksQuery()
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
@@ -77,6 +79,7 @@ export const DecksPages = () => {
           ))}
         </TableBody>
       </Table>
+      <Button onClick={() => fetchData({ name: search })}>Fetch Data</Button>
     </Container>
   )
 }

@@ -49,4 +49,5 @@ export const {
   useDeleteDeckMutation,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
+  useLazyGetDecksQuery,
 } = baseApi
