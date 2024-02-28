@@ -1,10 +1,10 @@
-export type DecksResponse = {
-  items: DecksResponseItem[]
-  pagination: DecksResponsePagination
+export type Decks = {
+  items: Deck[]
+  pagination: DecksPagination
 }
 
-export type DecksResponseItem = {
-  author: DecksResponseItemAuthor
+export type Deck = {
+  author: DeckAuthor
   cardsCount: number
   cover?: null | string
   created: string
@@ -14,12 +14,12 @@ export type DecksResponseItem = {
   updated: string
   userId: string
 }
-export type DecksResponseItemAuthor = {
+export type DeckAuthor = {
   id: string
   name: string
 }
 
-export type DecksResponsePagination = {
+export type DecksPagination = {
   currentPage: number
   itemsPerPage: number
   totalItems: number
@@ -34,4 +34,10 @@ export type GetDecksArgs = {
   minCardsCount?: number
   name?: string
   orderBy?: string
+}
+
+export type CreateDeckArgs = {
+  // cover: string
+  isPrivate?: boolean
+  name: string
 }

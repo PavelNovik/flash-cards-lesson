@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container/container'
 import {
   Table,
@@ -10,11 +11,12 @@ import {
   TableRow,
 } from '@/components/ui/table/Table'
 import { TextField } from '@/components/ui/text-field/text-field'
-import { useGetDecksQuery } from '@/services/base-api'
+import { useCreateDeckMutation, useGetDecksQuery } from '@/services/base-api'
 
 export const DecksPages = () => {
   const [search, setSearch] = useState('')
-  const { data, isError, isLoading } = useGetDecksQuery({ name: search })
+  const { data, isError, isLoading, refetch } = useGetDecksQuery({ name: search })
+  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
 
   if (isLoading) {
     return <div>...Loading</div>
@@ -27,6 +29,7 @@ export const DecksPages = () => {
   return (
     <Container>
       <TextField label={'Search'} onChange={e => setSearch(e.currentTarget.value)} value={search} />
+      <Button onClick={() => createDeck({ name: search }).finally(refetch)}>Add new Deck</Button>
       <Table>
         <TableHead>
           <TableRow>

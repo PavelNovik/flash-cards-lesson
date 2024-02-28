@@ -1,6 +1,4 @@
-import * as path from 'path'
-
-import { DecksResponse, GetDecksArgs } from '@/services/decks/decks.types'
+import { CreateDeckArgs, Deck, Decks, GetDecksArgs } from '@/services/decks/decks.types'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const baseApi = createApi({
@@ -13,7 +11,14 @@ export const baseApi = createApi({
   }),
   endpoints: builder => {
     return {
-      getDecks: builder.query<DecksResponse, GetDecksArgs | void>({
+      createDeck: builder.mutation<Deck, CreateDeckArgs>({
+        query: body => ({
+          body,
+          method: 'POST',
+          url: `v1/decks`,
+        }),
+      }),
+      getDecks: builder.query<Decks, GetDecksArgs | void>({
         query: args => ({
           params: args ?? undefined,
           url: `v2/decks`,
@@ -24,4 +29,4 @@ export const baseApi = createApi({
   reducerPath: 'baseApi',
 })
 
-export const { useGetDecksQuery } = baseApi
+export const { useCreateDeckMutation, useGetDecksQuery } = baseApi
