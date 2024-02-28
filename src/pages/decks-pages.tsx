@@ -11,13 +11,28 @@ import {
   TableRow,
 } from '@/components/ui/table/Table'
 import { TextField } from '@/components/ui/text-field/text-field'
-import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/base-api'
+import {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxCardsQuery,
+} from '@/services/base-api'
 
 export const DecksPages = () => {
   const [search, setSearch] = useState('')
-  const { data, isError, isLoading } = useGetDecksQuery({ name: search })
+  const { data: minMaxCardData } = useGetMinMaxCardsQuery()
+
+  console.log(minMaxCardData)
+  const { data, isError, isLoading } = useGetDecksQuery(
+    {
+      maxCardsCount: minMaxCardData?.max,
+      minCardsCount: minMaxCardData?.min,
+      name: search,
+    },
+    { skip: !minMaxCardData }
+  )
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
-  const [deleteDeck, { isLoading: isDeckBeingDeleated }] = useDeleteDeckMutation()
+  const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   if (isLoading) {
     return <div>...Loading</div>
@@ -54,7 +69,7 @@ export const DecksPages = () => {
               <TableData>{new Date(i.updated).toLocaleDateString('ru-Ru')}</TableData>
               <TableData>{i.author.name}</TableData>
               <TableData>
-                <Button disabled={isDeckBeingDeleated} onClick={() => deleteDeck(i.id)}>
+                <Button disabled={isDeckBeingDeleted} onClick={() => deleteDeck(i.id)}>
                   Delete
                 </Button>
               </TableData>

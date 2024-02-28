@@ -33,10 +33,20 @@ export const baseApi = createApi({
           url: `v2/decks`,
         }),
       }),
+      getMinMaxCards: builder.query<any, void>({
+        query: () => ({
+          url: `v2/decks/min-max-cards`,
+        }),
+      }),
     }
   },
   reducerPath: 'baseApi',
   tagTypes: ['Decks'],
 })
 
-export const { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } = baseApi
+export const {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxCardsQuery,
+} = baseApi
