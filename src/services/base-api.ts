@@ -19,6 +19,13 @@ export const baseApi = createApi({
           url: `v1/decks`,
         }),
       }),
+      deleteDeck: builder.mutation<Deck, string>({
+        invalidatesTags: ['Decks'],
+        query: id => ({
+          method: 'DELETE',
+          url: `v1/decks/${id}`,
+        }),
+      }),
       getDecks: builder.query<Decks, GetDecksArgs | void>({
         providesTags: ['Decks'],
         query: args => ({
@@ -32,4 +39,4 @@ export const baseApi = createApi({
   tagTypes: ['Decks'],
 })
 
-export const { useCreateDeckMutation, useGetDecksQuery } = baseApi
+export const { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } = baseApi

@@ -11,12 +11,13 @@ import {
   TableRow,
 } from '@/components/ui/table/Table'
 import { TextField } from '@/components/ui/text-field/text-field'
-import { useCreateDeckMutation, useGetDecksQuery } from '@/services/base-api'
+import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services/base-api'
 
 export const DecksPages = () => {
   const [search, setSearch] = useState('')
   const { data, isError, isLoading } = useGetDecksQuery({ name: search })
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [deleteDeck, { isLoading: isDeckBeingDeleated }] = useDeleteDeckMutation()
 
   if (isLoading) {
     return <div>...Loading</div>
@@ -29,7 +30,9 @@ export const DecksPages = () => {
   return (
     <Container>
       <TextField label={'Search'} onChange={e => setSearch(e.currentTarget.value)} value={search} />
-      <Button onClick={() => createDeck({ name: search })}>Add new Deck</Button>
+      <Button disabled={isDeckBeingCreated} onClick={() => createDeck({ name: search })}>
+        Add new Deck
+      </Button>
       <Table>
         <TableHead>
           <TableRow>
@@ -50,7 +53,11 @@ export const DecksPages = () => {
               <TableData>{i.cardsCount}</TableData>
               <TableData>{new Date(i.updated).toLocaleDateString('ru-Ru')}</TableData>
               <TableData>{i.author.name}</TableData>
-              <TableData>{i.userId}</TableData>
+              <TableData>
+                <Button disabled={isDeckBeingDeleated} onClick={() => deleteDeck(i.id)}>
+                  Delete
+                </Button>
+              </TableData>
             </TableRow>
           ))}
         </TableBody>
