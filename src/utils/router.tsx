@@ -1,4 +1,10 @@
-import { Navigate, Outlet, RouteObject, createBrowserRouter } from 'react-router-dom'
+import {
+  Navigate,
+  Outlet,
+  RouteObject,
+  RouterProvider,
+  createBrowserRouter,
+} from 'react-router-dom'
 
 import { DecksPages } from '@/pages/decks-pages'
 import { useGetDecksQuery } from '@/services/base-api'
@@ -14,6 +20,10 @@ const privateRoutes: RouteObject[] = [
   {
     element: <div>hello</div>,
     path: '/',
+  },
+  {
+    element: <DecksPages />,
+    path: 'decks',
   },
 ]
 
@@ -31,7 +41,7 @@ function PrivateRoutes() {
   // const isAuthenticated = false
   const isAuthenticated = true
 
-  return isAuthenticated ? <Outlet /> : <Navigate to={'/login'} />
+  return isAuthenticated ? <Outlet /> : <Navigate to={'login'} />
 }
 export const Router = () => {
   // const result = useGetDecksQuery()
@@ -44,16 +54,21 @@ export const Router = () => {
   if (isError) {
     return <div>...Error</div>
   }
-  console.log(data)
+  // console.log(data)
+  // console.log(JSON.stringify(data))
 
-  return (
-    <>
-      <DecksPages />
-      {/*<div>{JSON.stringify(data.items)}</div>*/}
-    </>
-  )
+  // return (
+  //   <>
+  {
+    /*<DecksPages />*/
+  }
+  {
+    /*<div>{JSON.stringify(data.items)}</div>*/
+  }
+  // </>
+  // )
 
   // console.log(result)
 
-  // return <RouterProvider router={router} />
+  return <RouterProvider router={router} />
 }
