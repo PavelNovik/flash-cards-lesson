@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container/container'
 import {
@@ -16,7 +14,6 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
-  // useLazyGetDecksQuery,
 } from '@/services/base-api'
 import { useDebounceValue } from 'usehooks-ts'
 
