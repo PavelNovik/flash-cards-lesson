@@ -6,12 +6,14 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
+import { useGetMeQuery } from '@/components/auth/auth.service'
+import { LoginForm } from '@/components/auth/login-form/login-form'
 import { DecksPages } from '@/pages/decks-pages'
-import { useGetDecksQuery } from '@/services/base-api'
+import { useGetDecksQuery } from '@/services/decks/decks.service'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <div>login</div>,
+    element: <LoginForm />,
     path: '/login',
   },
 ]
@@ -38,6 +40,9 @@ const router = createBrowserRouter([
 ])
 
 function PrivateRoutes() {
+  const { data, isError } = useGetMeQuery()
+
+  console.log(data)
   // const isAuthenticated = false
   const isAuthenticated = true
 
