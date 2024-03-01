@@ -14,7 +14,7 @@ import {
   useDeleteDeckMutation,
   useGetDecksQuery,
   useGetMinMaxCardsQuery,
-} from '@/services/base-api'
+} from '@/services/decks/decks.service'
 import { useDebounceValue } from 'usehooks-ts'
 
 export const DecksPages = () => {
