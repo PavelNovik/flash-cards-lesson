@@ -50,38 +50,58 @@ export const LoginForm = () => {
     <>
       {process.env.NODE_ENV === 'development' && <DevTool control={control} />}
       {/*<DevTool control={control} />*/}
-      <form onSubmit={handleSubmit(onSubmit)} ref={formRef}>
-        <TextField
-          errorMessage={errors.email?.message}
-          {...register('email')}
-          label={'email'}
-          type={'email'}
-        />
-        <TextField
-          errorMessage={errors.password?.message}
-          {...register('password')}
-          label={'password'}
-          type={'password'}
-        />
-        {/*<ControlledTextfield*/}
-        {/*  control={control}*/}
-        {/*  errorMessage={errors.phone?.message}*/}
-        {/*  label={'phone'}*/}
-        {/*  name={}*/}
-        {/*  type={'text'}*/}
-        {/*/>*/}
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          marginTop: '100px',
+        }}
+      >
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          ref={formRef}
+          style={{
+            border: '1px solid white',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            justifyContent: 'center',
+            padding: '20px',
+          }}
+        >
+          <TextField
+            errorMessage={errors.email?.message}
+            {...register('email')}
+            label={'email'}
+            type={'email'}
+          />
+          <TextField
+            errorMessage={errors.password?.message}
+            {...register('password')}
+            label={'password'}
+            type={'password'}
+          />
+          {/*<ControlledTextfield*/}
+          {/*  control={control}*/}
+          {/*  errorMessage={errors.phone?.message}*/}
+          {/*  label={'phone'}*/}
+          {/*  name={}*/}
+          {/*  type={'text'}*/}
+          {/*/>*/}
 
-        {/*<FormCheckbox*/}
-        {/*  checked={value}*/}
-        {/*  // name={'remeberMe'}*/}
-        {/*  label={'Remember me'}*/}
-        {/*  //{...register('rememberMe')}*/}
-        {/*  onValueChange={onChange}*/}
-        {/*/>*/}
+          {/*<FormCheckbox*/}
+          {/*  checked={value}*/}
+          {/*  // name={'remeberMe'}*/}
+          {/*  label={'Remember me'}*/}
+          {/*  //{...register('rememberMe')}*/}
+          {/*  onValueChange={onChange}*/}
+          {/*/>*/}
 
-        <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
-        <Button type={'submit'}>Submit</Button>
-      </form>
+          <ControlledCheckbox control={control} label={'Remember me'} name={'rememberMe'} />
+          <Button type={'submit'}>Submit</Button>
+        </form>
+      </div>
     </>
   )
 }
