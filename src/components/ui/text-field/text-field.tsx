@@ -7,12 +7,14 @@ export type Textfield = {
 } & ComponentPropsWithoutRef<'input'>
 
 export const TextField = forwardRef<ElementRef<'input'>, Textfield>((props, ref) => {
-  const { errorMessage, ...rest } = props
+  const { errorMessage, name, ...rest } = props
 
   return (
     <div>
-      <label htmlFor={rest.name}>{rest.label} </label>
-      <input {...rest} id={rest.name} ref={ref} style={{ backgroundColor: 'inherit' }} />
+      <label htmlFor={name} style={{ fontSize: '10px' }}>
+        {rest.label}{' '}
+      </label>
+      <input {...rest} id={name} ref={ref} style={{ backgroundColor: 'inherit' }} />
       {errorMessage && <span style={{ color: 'red', fontSize: '15px' }}>{errorMessage}</span>}
     </div>
   )
