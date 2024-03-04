@@ -8,6 +8,7 @@ import {
 
 import { useGetMeQuery } from '@/components/auth/auth.service'
 import { LoginForm } from '@/components/auth/login-form/login-form'
+import { Layout } from '@/components/ui/Layout/layout'
 import { DecksPages } from '@/pages/decks-pages'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 
@@ -21,11 +22,11 @@ const publicRoutes: RouteObject[] = [
 const privateRoutes: RouteObject[] = [
   {
     element: <div>hello</div>,
-    path: '/',
+    path: 'decks',
   },
   {
     element: <DecksPages />,
-    path: 'decks',
+    path: '/',
   },
 ]
 
@@ -33,10 +34,15 @@ const privateRoutes: RouteObject[] = [
 
 const router = createBrowserRouter([
   {
-    children: privateRoutes,
-    element: <PrivateRoutes />,
+    children: [
+      {
+        children: privateRoutes,
+        element: <PrivateRoutes />,
+      },
+      ...publicRoutes,
+    ],
+    element: <Layout />,
   },
-  ...publicRoutes,
 ])
 
 function PrivateRoutes() {
