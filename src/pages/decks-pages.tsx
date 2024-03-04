@@ -1,5 +1,8 @@
+import { useState } from 'react'
+
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container/container'
+import { Pagination } from '@/components/ui/pagination/pagination'
 import {
   Table,
   TableBody,
@@ -17,14 +20,20 @@ import {
 } from '@/services/decks/decks.service'
 import { useDebounceValue } from 'usehooks-ts'
 
+import s from './deck-page.module.scss'
+
 export const DecksPages = () => {
   const [search, setSearch] = useDebounceValue('', 500)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
   const { data: minMaxCardData } = useGetMinMaxCardsQuery()
 
   console.log(minMaxCardData)
   const { data, isError, isLoading } = useGetDecksQuery(
     {
       // maxCardsCount: minMaxCardData?.max,
+      currentPage: currentPage,
+      itemsPerPage: pageSize,
       // minCardsCount: minMaxCardData?.min,
       name: search,
     }
@@ -43,15 +52,19 @@ export const DecksPages = () => {
   }
 
   return (
-    <Container>
-      <TextField
-        defaultValue={search}
-        label={'Search'}
-        onChange={e => setSearch(e.currentTarget.value)}
-      />
-      <Button disabled={isDeckBeingCreated} onClick={() => createDeck({ name: search })}>
-        Add new Deck
-      </Button>
+    <Container className={s.deckContainer}>
+      <Container className={s.formContainer}>
+        <TextField
+          defaultValue={search}
+          label={'Search'}
+          name={'search'}
+          onChange={e => setSearch(e.currentTarget.value)}
+        />
+        <Button disabled={isDeckBeingCreated} onClick={() => createDeck({ name: search })}>
+          Add new Deck
+        </Button>
+      </Container>
+
       <Table>
         <TableHead>
           <TableRow>
@@ -81,6 +94,12 @@ export const DecksPages = () => {
           ))}
         </TableBody>
       </Table>
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        onPageSizeChange={setPageSize}
+        pageSize={pageSize}
+      />
       {/*<Button onClick={() => fetchData({ name: search })}>Fetch Data</Button>*/}
     </Container>
   )
