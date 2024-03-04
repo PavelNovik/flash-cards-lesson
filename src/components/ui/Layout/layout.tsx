@@ -8,10 +8,10 @@ export const Layout = () => {
   const { data, isError, isLoading } = useGetMeQuery()
   const isAuthentificated = !isError && !isLoading
 
-  console.log(data)
+  console.log(isAuthentificated)
 
   return (
-    <LayoutBase isLoggedIn={isAuthentificated}>
+    <LayoutBase data={data} isLoggedIn={isAuthentificated}>
       <Outlet />
     </LayoutBase>
   )
