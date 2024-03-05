@@ -6,16 +6,17 @@ import {
   createBrowserRouter,
 } from 'react-router-dom'
 
-import { useGetMeQuery } from '@/components/auth/auth.service'
-import { LoginForm } from '@/components/auth/login-form/login-form'
+import { LoginPage } from '@/components/auth/login-page/login-page'
 import { Layout } from '@/components/ui/Layout/layout'
+import { Loader } from '@/components/ui/loader/loader'
 import { DecksPages } from '@/pages/decks-pages'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 import { useGetDecksQuery } from '@/services/decks/decks.service'
 
 const publicRoutes: RouteObject[] = [
   {
-    element: <LoginForm />,
-    path: '/login',
+    element: <LoginPage />,
+    path: 'login',
   },
 ]
 
@@ -49,8 +50,7 @@ function PrivateRoutes() {
   const { data, isError } = useGetMeQuery()
 
   console.log(data)
-  // const isAuthenticated = false
-  const isAuthenticated = true
+  const isAuthenticated = !isError
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'login'} />
 }
@@ -59,12 +59,16 @@ export const Router = () => {
   const { data, isError, isLoading } = useGetDecksQuery()
 
   if (isLoading) {
-    return <div>...Loading</div>
+    return (
+      <div style={{ margin: '100px auto' }}>
+        <Loader />
+      </div>
+    )
   }
 
-  if (isError) {
-    return <div>...Error</div>
-  }
+  // if (isError) {
+  //   return <div>...Error</div>
+  // }
   // console.log(data)
   // console.log(JSON.stringify(data))
 
