@@ -43,13 +43,13 @@ export const DecksPages = () => {
   const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
-  if (isLoading) {
-    return <div>...Loading</div>
-  }
-
-  if (isError) {
-    return <div>...Error</div>
-  }
+  // if (isLoading) {
+  //   return <div>...Loading</div>
+  // }
+  //
+  // if (isError) {
+  //   return <div>...Error</div>
+  // }
 
   return (
     <Container className={s.deckContainer}>
