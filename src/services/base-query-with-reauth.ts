@@ -22,23 +22,20 @@ export const baseQueryWithReauth: BaseQueryFn<
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
 
-      try {
-        // try to get a new token
-        const refreshResult = await baseQuery(
-          { method: 'POST', url: 'v1/auth/refresh-token' },
-          api,
-          extraOptions
-        )
+      // try to get a new token
+      const refreshResult = await baseQuery(
+        { method: 'POST', url: 'v1/auth/refresh-token' },
+        api,
+        extraOptions
+      )
 
-        if (refreshResult.meta?.response?.status === 204) {
-          // retry the initial query
-          result = await baseQuery(args, api, extraOptions)
-        } else {
-          // router.navigate('/login')
-        }
-      } finally {
-        release()
+      if (refreshResult.meta?.response?.status === 204) {
+        // retry the initial query
+        result = await baseQuery(args, api, extraOptions)
+      } else {
+        // router.navigate('/login')
       }
+      release()
     } else {
       await mutex.waitForUnlock()
       result = await baseQuery(args, api, extraOptions)
