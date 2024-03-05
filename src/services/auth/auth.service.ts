@@ -1,10 +1,6 @@
+import { LoginArgs } from '@/services/auth/auth.types'
 import { baseApi } from '@/services/base-api'
 
-type LoginArgs = {
-  email: string
-  password: string
-  rememberMe: boolean
-}
 export const authService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
@@ -24,4 +20,4 @@ export const authService = baseApi.injectEndpoints({
   },
 })
 
-export const { useGetMeQuery } = authService
+export const { useGetMeQuery, useLoginMutation } = authService
