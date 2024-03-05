@@ -18,7 +18,12 @@ export const Pagination = ({
       <Button disabled={currentPage <= 1} onClick={() => onPageChange(currentPage - 1)}>
         Previous page
       </Button>
-      <select name={'pages'} onChange={e => onPageSizeChange(+e.currentTarget.value)}>
+      <select
+        defaultValue={10}
+        name={'pages'}
+        onChange={e => onPageSizeChange(+e.currentTarget.value)}
+        style={{ backgroundColor: 'black' }}
+      >
         <option value={5}>5</option>
         <option value={7}>7</option>
         <option value={10}>10</option>
