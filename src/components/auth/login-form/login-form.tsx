@@ -9,7 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const loginSchema = z.object({
-  email: z.string().min(1, 'To small bitch').email('It is not valid bitch'),
+  email: z.string().email('It is not valid bitch'),
   password: z.string().min(3),
   rememberMe: z.boolean().optional(),
 })
@@ -22,7 +22,10 @@ type FormValues = z.infer<typeof loginSchema>
 //   rememberMe: boolean
 // }
 
-export const LoginForm = () => {
+type LoginFormProps = {
+  onSubmit: (data: FormValues) => void
+}
+export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const formRef = useRef(null)
   const {
     control,
@@ -42,8 +45,9 @@ export const LoginForm = () => {
   //   field: { onChange, value },
   // } = useController({ control, defaultValue: false, name: 'rememberMe' })
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmitHandler = (data: FormValues) => {
     console.log(data)
+    onSubmit(data)
   }
 
   return (
@@ -59,10 +63,11 @@ export const LoginForm = () => {
         }}
       >
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmitHandler)}
           ref={formRef}
           style={{
             border: '1px solid white',
+            borderRadius: '5px',
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
