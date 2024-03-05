@@ -1,5 +1,9 @@
 import { router } from '@/utils/router'
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError, fetchBaseQuery } from '@reduxjs/toolkit/query'
+import { Mutex } from 'async-mutex'
+
+// create a new mutex
+const mutex = new Mutex()
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://api.flashcards.andrii.es',
@@ -11,22 +15,33 @@ export const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
+  await mutex.waitForUnlock()
   let result = await baseQuery(args, api, extraOptions)
 
   if (result.error?.status === 401) {
-    // try to get a new token
-    const refreshResult = await baseQuery(
-      { method: 'POST', url: 'v1/auth/refresh-token' },
-      api,
-      extraOptions
-    )
+    if (!mutex.isLocked()) {
+      const release = await mutex.acquire()
 
-    if (refreshResult.meta?.response?.status === 204) {
-      // retry the initial query
-      result = await baseQuery(args, api, extraOptions)
+      try {
+        // try to get a new token
+        const refreshResult = await baseQuery(
+          { method: 'POST', url: 'v1/auth/refresh-token' },
+          api,
+          extraOptions
+        )
+
+        if (refreshResult.meta?.response?.status === 204) {
+          // retry the initial query
+          result = await baseQuery(args, api, extraOptions)
+        } else {
+          // router.navigate('/login')
+        }
+      } finally {
+        release()
+      }
     } else {
-      // console.log(router)
-      // router.navigate('/login')
+      await mutex.waitForUnlock()
+      result = await baseQuery(args, api, extraOptions)
     }
   }
 
