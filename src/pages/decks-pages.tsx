@@ -12,12 +12,7 @@ import {
   TableRow,
 } from '@/components/ui/table/Table'
 import { TextField } from '@/components/ui/text-field/text-field'
-import {
-  useCreateDeckMutation,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-  useGetMinMaxCardsQuery,
-} from '@/services/decks/decks.service'
+import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services'
 import { useDebounceValue } from 'usehooks-ts'
 
 import s from './deck-page.module.scss'
@@ -26,7 +21,7 @@ export const DecksPages = () => {
   const [search, setSearch] = useDebounceValue('', 500)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
-  const { data: minMaxCardData } = useGetMinMaxCardsQuery()
+  // const { data: minMaxCardData } = useGetMinMaxCardsQuery()
 
   // console.log(minMaxCardData)
   const { data, isError, isLoading } = useGetDecksQuery(

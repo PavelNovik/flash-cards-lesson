@@ -16,14 +16,14 @@ import { useGetDecksQuery } from '@/services/decks/decks.service'
 const publicRoutes: RouteObject[] = [
   {
     element: <LoginPage />,
-    path: 'login',
+    path: '/login',
   },
 ]
 
 const privateRoutes: RouteObject[] = [
   {
     element: <div>hello</div>,
-    path: 'decks',
+    path: '/decks',
   },
   {
     element: <DecksPages />,
@@ -32,8 +32,7 @@ const privateRoutes: RouteObject[] = [
 ]
 
 // const router = createBrowserRouter([...privateRoutes, ...publicRoutes])
-
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     children: [
       {
@@ -46,18 +45,9 @@ const router = createBrowserRouter([
   },
 ])
 
-function PrivateRoutes() {
-  const { data, isError } = useGetMeQuery()
-
-  const isAuthenticated = !isError
-
-  console.log(isAuthenticated)
-
-  return isAuthenticated ? <Outlet /> : <Navigate to={'login'} />
-}
 export const Router = () => {
   // const result = useGetDecksQuery()
-  const { data, isError, isLoading } = useGetDecksQuery()
+  const { isLoading } = useGetDecksQuery()
 
   if (isLoading) {
     return (
@@ -68,4 +58,12 @@ export const Router = () => {
   }
 
   return <RouterProvider router={router} />
+}
+
+function PrivateRoutes() {
+  const { isError } = useGetMeQuery()
+
+  const isAuthenticated = !isError
+
+  return isAuthenticated ? <Outlet /> : <Navigate to={'login'} />
 }

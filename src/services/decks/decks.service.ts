@@ -1,4 +1,4 @@
-import { baseApi } from '@/services/base-api'
+import { baseApi } from '@/services'
 import { CreateDeckArgs, Deck, Decks, GetDecksArgs } from '@/services/decks/decks.types'
 
 export const decksService = baseApi.injectEndpoints({

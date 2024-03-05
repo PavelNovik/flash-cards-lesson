@@ -1,9 +1,9 @@
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Bounce, toast } from 'react-toastify'
 
 import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Page } from '@/components/ui/page/page'
-import { useLoginMutation } from '@/services/auth/auth.service'
+import { useLoginMutation } from '@/services'
 import { LoginArgs } from '@/services/auth/auth.types'
 
 export const LoginPage = () => {
@@ -29,9 +29,9 @@ export const LoginPage = () => {
           transition: Bounce,
         })
       )
-      .finally(() => {
-        navigate('/')
-      })
+    // .finally(() => {
+    //   navigate('/')
+    // })
   }
 
   return (
