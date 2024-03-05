@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { Bounce, toast } from 'react-toastify'
 
 import { LoginForm } from '@/components/auth/login-form/login-form'
@@ -15,17 +15,22 @@ export const LoginPage = () => {
       .unwrap()
       .then(() => {
         navigate('/')
-        toast.success('🦄 Wow so easy!', {
+      })
+      .catch(err =>
+        toast.error(err.data.message, {
           autoClose: 5000,
           closeOnClick: true,
           draggable: true,
           hideProgressBar: false,
           pauseOnHover: true,
-          position: 'top-right',
+          position: 'top-center',
           progress: undefined,
-          theme: 'light',
+          theme: 'dark',
           transition: Bounce,
         })
+      )
+      .finally(() => {
+        navigate('/')
       })
   }
 

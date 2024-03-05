@@ -28,7 +28,7 @@ export const DecksPages = () => {
   const [pageSize, setPageSize] = useState(10)
   const { data: minMaxCardData } = useGetMinMaxCardsQuery()
 
-  console.log(minMaxCardData)
+  // console.log(minMaxCardData)
   const { data, isError, isLoading } = useGetDecksQuery(
     {
       // maxCardsCount: minMaxCardData?.max,

@@ -49,8 +49,9 @@ const router = createBrowserRouter([
 function PrivateRoutes() {
   const { data, isError } = useGetMeQuery()
 
-  console.log(data)
   const isAuthenticated = !isError
+
+  console.log(isAuthenticated)
 
   return isAuthenticated ? <Outlet /> : <Navigate to={'login'} />
 }
@@ -65,25 +66,6 @@ export const Router = () => {
       </div>
     )
   }
-
-  // if (isError) {
-  //   return <div>...Error</div>
-  // }
-  // console.log(data)
-  // console.log(JSON.stringify(data))
-
-  // return (
-  //   <>
-  {
-    /*<DecksPages />*/
-  }
-  {
-    /*<div>{JSON.stringify(data.items)}</div>*/
-  }
-  // </>
-  // )
-
-  // console.log(result)
 
   return <RouterProvider router={router} />
 }

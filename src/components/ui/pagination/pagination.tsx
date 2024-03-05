@@ -18,6 +18,7 @@ export const Pagination = ({
       <Button disabled={currentPage <= 1} onClick={() => onPageChange(currentPage - 1)}>
         Previous page
       </Button>
+      <Button onClick={() => onPageChange(currentPage + 1)}>Next page</Button>
       <select
         defaultValue={10}
         name={'pages'}
@@ -29,7 +30,6 @@ export const Pagination = ({
         <option value={10}>10</option>
       </select>
       {pageSize}
-      <Button onClick={() => onPageChange(currentPage + 1)}>Next page</Button>
     </div>
   )
 }
