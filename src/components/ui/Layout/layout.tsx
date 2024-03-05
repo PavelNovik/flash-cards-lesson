@@ -1,17 +1,17 @@
 import { ReactNode } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { useGetMeQuery } from '@/components/auth/auth.service'
 import { Header, HeaderProps } from '@/components/ui/header/header'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 
 export const Layout = () => {
   const { data, isError, isLoading } = useGetMeQuery()
   const isAuthentificated = !isError && !isLoading
 
-  console.log(isAuthentificated)
+  // console.log(isAuthentificated)
 
   return (
-    <LayoutBase data={data} isLoggedIn={isAuthentificated}>
+    <LayoutBase data={data ?? {}} isLoggedIn={isAuthentificated}>
       <Outlet />
     </LayoutBase>
   )

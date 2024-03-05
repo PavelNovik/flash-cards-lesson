@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Auth } from '@/components/auth/auth.types'
+import { Auth } from '@/services/auth/auth.types'
 
 import { Header } from './header'
 
