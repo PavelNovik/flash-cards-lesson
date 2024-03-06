@@ -13,7 +13,7 @@ export const decksService = baseApi.injectEndpoints({
     return {
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
-        async onQueryStarted({}, { dispatch, getState, queryFulfilled }) {
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
           const result = await queryFulfilled
           const arrDeck = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
 
@@ -25,11 +25,21 @@ export const decksService = baseApi.injectEndpoints({
             )
           })
         },
-        query: body => ({
-          body,
-          method: 'POST',
-          url: `v1/decks`,
-        }),
+        query: body => {
+          const formData = new FormData()
+
+          if (body.cover) {
+            formData.append('cover', body.cover)
+            formData.append('isPrivate', String(body.isPrivate))
+            formData.append('name', body.name)
+          }
+
+          return {
+            body: formData,
+            method: 'POST',
+            url: `v1/decks`,
+          }
+        },
       }),
       deleteDeck: builder.mutation<Deck, string>({
         invalidatesTags: ['Decks'],
