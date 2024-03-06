@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 
 import { LoginPage } from '@/components/auth/login-page/login-page'
-import { Layout } from '@/components/ui/Layout/layout'
+import { Layout } from '@/components/ui/layout/layout'
 import { Loader } from '@/components/ui/loader/loader'
 import { DecksPages } from '@/pages/decks-pages'
 import { useGetMeQuery } from '@/services/auth/auth.service'
