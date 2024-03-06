@@ -20,6 +20,7 @@ import {
   useGetMeQuery,
   useUpdateDeckMutation,
 } from '@/services'
+import { CreateDeckArgs } from '@/services/decks/decks.types'
 import { useDebounceValue } from 'usehooks-ts'
 
 import s from './deck-page.module.scss'
@@ -73,7 +74,7 @@ export const DecksPages = () => {
   return (
     <Container className={s.deckContainer}>
       <DeckDialog
-        defaultValues={deckToEdit}
+        defaultValues={deckToEdit as CreateDeckArgs}
         key={deckToEditId}
         onConfirm={data => {
           if (!deckToEditId) {
