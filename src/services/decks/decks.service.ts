@@ -13,6 +13,18 @@ export const decksService = baseApi.injectEndpoints({
     return {
       createDeck: builder.mutation<Deck, CreateDeckArgs>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted({}, { dispatch, getState, queryFulfilled }) {
+          const result = await queryFulfilled
+          const arrDeck = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
+
+          arrDeck.forEach(({ originalArgs }) => {
+            dispatch(
+              decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+                draft.items.unshift(result.data)
+              })
+            )
+          })
+        },
         query: body => ({
           body,
           method: 'POST',
