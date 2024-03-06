@@ -37,7 +37,8 @@ export type GetDecksArgs = {
 }
 
 export type CreateDeckArgs = {
-  // cover: string
+  cover?: string
   isPrivate?: boolean
   name: string
 }
+export type UpdateDeckArgs = Partial<CreateDeckArgs> & { id: Deck['id'] }
