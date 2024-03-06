@@ -21,7 +21,7 @@ export const Header = forwardRef<
         <Link to={'/'}>Logo</Link>
         {isLoggedIn && (
           <div style={{ alignItems: 'center', display: 'flex', gap: '20px' }}>
-            <img src={data.avatar} style={{ width: '40px' }} />
+            <img src={data.avatar ?? ''} style={{ width: '40px' }} />
             {data.name}
           </div>
         )}

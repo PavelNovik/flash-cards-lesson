@@ -26,7 +26,10 @@ export const DecksPages = () => {
   // const { data: minMaxCardData } = useGetMinMaxCardsQuery()
 
   // console.log(minMaxCardData)
-  const { data, isError, isLoading } = useGetDecksQuery(
+  const {
+    data,
+    // , isError, isLoading
+  } = useGetDecksQuery(
     {
       // maxCardsCount: minMaxCardData?.max,
       currentPage: currentPage,
@@ -37,7 +40,10 @@ export const DecksPages = () => {
     // { skip: !minMaxCardData }
   )
   // const [fetchData, { data, isError, isLoading }] = useLazyGetDecksQuery()
-  const [createDeck, { isLoading: isDeckBeingCreated }] = useCreateDeckMutation()
+  const [
+    createDeck,
+    // , { isLoading: isDeckBeingCreated }
+  ] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
   // if (isLoading) {
