@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container/container'
+import { DeckDialog } from '@/components/ui/deck-dialog/deck-dialog'
 import { Pagination } from '@/components/ui/pagination/pagination'
 import {
   Table,
@@ -18,6 +19,7 @@ import { useDebounceValue } from 'usehooks-ts'
 import s from './deck-page.module.scss'
 
 export const DecksPages = () => {
+  const [showCreateModal, setShowCreateModal] = useState(false)
   const [search, setSearch] = useDebounceValue('', 500)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -55,9 +57,18 @@ export const DecksPages = () => {
           name={'search'}
           onChange={e => setSearch(e.currentTarget.value)}
         />
-        <Button disabled={isDeckBeingCreated} onClick={() => createDeck({ name: search })}>
-          Add new Deck
-        </Button>
+        {/*<Button disabled={isDeckBeingCreated} onClick={() => createDeck({ name: search })}>*/}
+        {/*  Add new Deck*/}
+        {/*</Button>*/}
+        <Button onClick={() => setShowCreateModal(true)}>Add new Deck</Button>
+        <DeckDialog
+          onCancel={() => setShowCreateModal(false)}
+          onConfirm={data => {
+            createDeck(data)
+          }}
+          onOpenChange={setShowCreateModal}
+          open={showCreateModal}
+        />
       </Container>
 
       <Table>
