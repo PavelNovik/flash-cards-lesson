@@ -13,13 +13,24 @@ import {
   TableRow,
 } from '@/components/ui/table/Table'
 import { TextField } from '@/components/ui/text-field/text-field'
-import { useCreateDeckMutation, useDeleteDeckMutation, useGetDecksQuery } from '@/services'
+import {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMeQuery,
+  useUpdateDeckMutation,
+} from '@/services'
 import { useDebounceValue } from 'usehooks-ts'
 
 import s from './deck-page.module.scss'
 
 export const DecksPages = () => {
+  const { data: me } = useGetMeQuery()
   const [showCreateModal, setShowCreateModal] = useState(false)
+  const [deckToEditId, setDeckToEditId] = useState<null | string>(null)
+
+  const showEditModal = !!deckToEditId
+
   const [search, setSearch] = useDebounceValue('', 500)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(10)
@@ -46,6 +57,7 @@ export const DecksPages = () => {
   ] = useCreateDeckMutation()
   const [deleteDeck, { isLoading: isDeckBeingDeleted }] = useDeleteDeckMutation()
 
+  const [updateDeck] = useUpdateDeckMutation()
   // if (isLoading) {
   //   return <div>...Loading</div>
   // }
@@ -54,8 +66,24 @@ export const DecksPages = () => {
   //   return <div>...Error</div>
   // }
 
+  const currentUserId = me?.id
+
+  const deckToEdit = data?.items?.find(deck => deck.id === deckToEditId)
+
   return (
     <Container className={s.deckContainer}>
+      <DeckDialog
+        defaultValues={deckToEdit}
+        key={deckToEditId}
+        onConfirm={data => {
+          if (!deckToEditId) {
+            return
+          }
+          updateDeck({ id: deckToEditId, ...data })
+        }}
+        onOpenChange={() => setDeckToEditId(null)}
+        open={showEditModal}
+      />
       <Container className={s.formContainer}>
         <TextField
           defaultValue={search}
@@ -92,15 +120,22 @@ export const DecksPages = () => {
             <TableRow key={i.id}>
               <TableData>
                 {i.name}
-                <img src={i.cover ?? undefined} width={70} />
+                <img src={i.cover ?? ''} width={70} />
               </TableData>
               <TableData>{i.cardsCount}</TableData>
               <TableData>{new Date(i.updated).toLocaleDateString('ru-Ru')}</TableData>
               <TableData>{i.author.name}</TableData>
               <TableData>
-                <Button disabled={isDeckBeingDeleted} onClick={() => deleteDeck(i.id)}>
-                  Delete
+                <Button
+                  disabled={isDeckBeingDeleted}
+                  onClick={() => deleteDeck(i.id)}
+                  style={{ marginRight: '10px' }}
+                >
+                  Del
                 </Button>
+                {currentUserId === i.userId && (
+                  <Button onClick={() => setDeckToEditId(i.id)}>Update</Button>
+                )}
               </TableData>
             </TableRow>
           ))}

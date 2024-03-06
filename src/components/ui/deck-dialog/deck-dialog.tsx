@@ -8,9 +8,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 const createDeckSchema = z.object({
-  cover: z.string().optional(),
-  isPrivate: z.boolean().optional(),
-  name: z.string().min(3),
+  cover: z.string().optional().nullable(),
+  isPrivate: z.boolean(),
+  name: z.string().min(3).max(500),
 })
 
 type FormValue = z.infer<typeof createDeckSchema>
@@ -20,7 +20,7 @@ type DeckDialogProps = Pick<DialogProps, 'onCancel' | 'onOpenChange' | 'open'> &
   onConfirm: (data: FormValue) => void
 }
 export const DeckDialog = ({
-  defaultValues = { cover: '', isPrivate: false, name: '' },
+  defaultValues = { cover: null, isPrivate: false, name: '' },
   onCancel,
   onConfirm,
   ...dialogProps
