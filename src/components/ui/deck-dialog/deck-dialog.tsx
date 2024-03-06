@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { Button } from '@/components/ui/button'
 import { Container } from '@/components/ui/container/container'
 import { ControlledCheckbox } from '@/components/ui/controlled/controlled-checkbox/controlled-checkbox'
 import { Dialog, DialogProps } from '@/components/ui/dialog/dialog'
@@ -64,9 +65,18 @@ export const DeckDialog = ({
               name={'cover'}
               onChange={e => setCover(e.currentTarget.files?.[0] ?? null)}
               ref={ref}
+              style={{ display: 'none' }}
               type={'file'}
             />
           </label>
+          <Button
+            onClick={() => {
+              ref.current?.click()
+            }}
+            type={'button'}
+          >
+            Add new image
+          </Button>
           <ControlledCheckbox control={control} label={'Is private'} name={'isPrivate'} />
         </Container>
       </form>
