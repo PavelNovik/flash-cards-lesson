@@ -6,7 +6,7 @@ import {
   GetDecksArgs,
   UpdateDeckArgs,
 } from '@/services/decks/decks.types'
-import { PatchCollection } from '@reduxjs/toolkit/dist/query/core/buildThunks'
+// import { PatchCollection } from '@reduxjs/toolkit/dist/query/core/buildThunks'
 
 export const decksService = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -42,7 +42,8 @@ export const decksService = baseApi.injectEndpoints({
         invalidatesTags: ['Decks'],
         async onQueryStarted({ id, ...patch }, { dispatch, getState, queryFulfilled }) {
           const arrDeck = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
-          let patchResult: PatchCollection
+          // let patchResult: PatchCollection
+          let patchResult: any
 
           arrDeck.forEach(({ originalArgs }) => {
             patchResult = dispatch(
