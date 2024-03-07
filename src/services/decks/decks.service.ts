@@ -28,10 +28,10 @@ export const decksService = baseApi.injectEndpoints({
         query: body => {
           const formData = new FormData()
 
+          formData.append('isPrivate', String(body.isPrivate))
+          formData.append('name', body.name)
           if (body.cover) {
             formData.append('cover', body.cover)
-            formData.append('isPrivate', String(body.isPrivate))
-            formData.append('name', body.name)
           }
 
           return {
@@ -43,6 +43,29 @@ export const decksService = baseApi.injectEndpoints({
       }),
       deleteDeck: builder.mutation<Deck, string>({
         invalidatesTags: ['Decks'],
+        async onQueryStarted(id, { dispatch, getState, queryFulfilled }) {
+          const arrDeck = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
+          // let patchResult: PatchCollection
+          let patchResult: any
+
+          arrDeck.forEach(({ originalArgs }) => {
+            patchResult = dispatch(
+              decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+                const index = draft.items.findIndex(deck => deck.id === id)
+
+                if (index !== -1) {
+                  draft.items.splice(index, 1)
+                }
+              })
+            )
+          })
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
         query: id => ({
           method: 'DELETE',
           url: `v1/decks/${id}`,

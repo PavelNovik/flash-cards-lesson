@@ -29,6 +29,7 @@ export const DeckDialog = ({
 }: DeckDialogProps) => {
   const [cover, setCover] = useState<File | null>(defaultValues?.cover ?? null)
   const ref = useRef<HTMLInputElement>(null)
+
   const {
     control,
     formState: { errors },
@@ -43,6 +44,7 @@ export const DeckDialog = ({
   const onSubmit = handleSubmit(data => {
     onConfirm({ ...data, cover })
     dialogProps.onOpenChange?.(false)
+    setCover(null)
     reset()
   })
   const handleCancel = () => {
