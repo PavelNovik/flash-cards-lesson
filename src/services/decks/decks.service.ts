@@ -28,10 +28,10 @@ export const decksService = baseApi.injectEndpoints({
         query: body => {
           const formData = new FormData()
 
+          formData.append('isPrivate', String(body.isPrivate))
+          formData.append('name', body.name)
           if (body.cover) {
             formData.append('cover', body.cover)
-            formData.append('isPrivate', String(body.isPrivate))
-            formData.append('name', body.name)
           }
 
           return {
