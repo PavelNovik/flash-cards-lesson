@@ -108,11 +108,26 @@ export const decksService = baseApi.injectEndpoints({
             patchResult.undo()
           }
         },
-        query: ({ id, ...body }) => ({
-          body: body,
-          method: 'PATCH',
-          url: `v1/decks/${id}`,
-        }),
+        query: ({ id, ...body }) => {
+          const formData = new FormData()
+
+          if (body.name) {
+            formData.append('name', body.name)
+          }
+          if (body.isPrivate) {
+            formData.append('isPrivate', String(body.isPrivate))
+          }
+
+          if (body.cover) {
+            formData.append('cover', body.cover)
+          }
+
+          return {
+            body: formData,
+            method: 'PATCH',
+            url: `v1/decks/${id}`,
+          }
+        },
       }),
     }
   },
