@@ -95,6 +95,7 @@ export const decksService = baseApi.injectEndpoints({
               decksService.util.updateQueryData('getDecks', originalArgs, draft => {
                 const deck = draft.items.find(deck => deck.id === id)
 
+                console.log(patch)
                 if (deck) {
                   Object.assign(deck, patch)
                 }
@@ -108,11 +109,26 @@ export const decksService = baseApi.injectEndpoints({
             patchResult.undo()
           }
         },
-        query: ({ id, ...body }) => ({
-          body: body,
-          method: 'PATCH',
-          url: `v1/decks/${id}`,
-        }),
+        query: ({ id, ...body }) => {
+          const formData = new FormData()
+
+          if (body.name) {
+            formData.append('name', body.name)
+          }
+          if (body.isPrivate) {
+            formData.append('isPrivate', String(body.isPrivate))
+          }
+
+          if (body.cover) {
+            formData.append('cover', body.cover)
+          }
+
+          return {
+            body: formData,
+            method: 'PATCH',
+            url: `v1/decks/${id}`,
+          }
+        },
       }),
     }
   },
