@@ -95,6 +95,7 @@ export const decksService = baseApi.injectEndpoints({
               decksService.util.updateQueryData('getDecks', originalArgs, draft => {
                 const deck = draft.items.find(deck => deck.id === id)
 
+                console.log(patch)
                 if (deck) {
                   Object.assign(deck, patch)
                 }
