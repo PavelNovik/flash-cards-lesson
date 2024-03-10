@@ -1,4 +1,4 @@
-import { baseApi } from '@/services'
+import { baseApi } from '@/services/base-api'
 import {
   CreateDeckArgs,
   Deck,

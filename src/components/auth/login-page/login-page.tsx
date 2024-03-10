@@ -3,7 +3,7 @@ import { Bounce, toast } from 'react-toastify'
 
 import { LoginForm } from '@/components/auth/login-form/login-form'
 import { Page } from '@/components/ui/page/page'
-import { useLoginMutation } from '@/services'
+import { useLoginMutation } from '@/services/auth/auth.service'
 import { LoginArgs } from '@/services/auth/auth.types'
 
 export const LoginPage = () => {
