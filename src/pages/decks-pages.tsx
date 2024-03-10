@@ -13,13 +13,13 @@ import {
   TableRow,
 } from '@/components/ui/table/Table'
 import { TextField } from '@/components/ui/text-field/text-field'
+import { useGetMeQuery } from '@/services/auth/auth.service'
 import {
   useCreateDeckMutation,
   useDeleteDeckMutation,
   useGetDecksQuery,
-  useGetMeQuery,
   useUpdateDeckMutation,
-} from '@/services'
+} from '@/services/decks/decks.service'
 import { CreateDeckArgs } from '@/services/decks/decks.types'
 import { useDebounceValue } from 'usehooks-ts'
 
