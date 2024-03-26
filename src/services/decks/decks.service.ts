@@ -85,30 +85,30 @@ export const decksService = baseApi.injectEndpoints({
       }),
       updateDeck: builder.mutation<Deck, UpdateDeckArgs>({
         invalidatesTags: ['Decks'],
-        async onQueryStarted({ id, ...patch }, { dispatch, getState, queryFulfilled }) {
-          const arrDeck = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
-          // let patchResult: PatchCollection
-          let patchResult: any
-
-          arrDeck.forEach(({ originalArgs }) => {
-            patchResult = dispatch(
-              decksService.util.updateQueryData('getDecks', originalArgs, draft => {
-                const deck = draft.items.find(deck => deck.id === id)
-
-                console.log(patch)
-                if (deck) {
-                  Object.assign(deck, patch)
-                }
-              })
-            )
-          })
-
-          try {
-            await queryFulfilled
-          } catch {
-            patchResult.undo()
-          }
-        },
+        // async onQueryStarted({ id, ...patch }, { dispatch, getState, queryFulfilled }) {
+        //   const arrDeck = decksService.util.selectInvalidatedBy(getState(), ['Decks'])
+        //   // let patchResult: PatchCollection
+        //   let patchResult: any
+        //
+        //   arrDeck.forEach(({ originalArgs }) => {
+        //     patchResult = dispatch(
+        //       decksService.util.updateQueryData('getDecks', originalArgs, draft => {
+        //         const deck = draft.items.find(deck => deck.id === id)
+        //
+        //         console.log(patch)
+        //         if (deck) {
+        //           Object.assign(deck, patch)
+        //         }
+        //       })
+        //     )
+        //   })
+        //
+        //   try {
+        //     await queryFulfilled
+        //   } catch {
+        //     patchResult.undo()
+        //   }
+        // },
         query: ({ id, ...body }) => {
           const formData = new FormData()
 
